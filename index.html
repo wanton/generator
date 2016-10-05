@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Password generator</title>
+    <meta name="description" content="Password generator">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Lalezar" rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.12/clipboard.min.js"></script>
+    <style>
+      html, body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        font-size: 2vw;
+      }
+
+      h1 {
+        font-family: 'Lalezar', cursive;
+        letter-spacing: 1px;
+        font-size: 5em;
+      }
+
+      body {
+        color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #1687ED;
+      }
+
+      input, button {
+        color: #ffffff;
+        display: block;
+        border: none;
+        outline: none;
+        margin: auto;
+      }
+
+      input {
+        background-color: transparent;
+        text-align: center;
+        font-size: 4em;
+        font-family: monospace;
+        border-bottom: 1px solid #9dc4e7;
+      }
+
+      button {
+        font-family: sans-serif;
+        position: relative;
+        margin: auto;
+        text-transform: uppercase;
+        border-radius: 0.5em;
+        width: 8em;
+        height: 3em;
+        margin-top: 1em;
+      }
+
+      .generate {
+        font-size: 2em;
+        background: #cb4e4e;
+        box-shadow: 0 0.2em #ab3c3c;
+      }
+
+      .generate:hover {
+        box-shadow: 0 0.1em #ab3c3c;
+        top: 0.1em;
+      }
+
+      .generate:active {
+        box-shadow: 0 0 #ab3c3c;
+        top: 0.2em;
+      }
+
+      .copy {
+        font-size: 1em;
+        background: #aaa;
+        box-shadow: 0 0.2em #888;
+      }
+
+      .copy:hover {
+        box-shadow: 0 0.1em #888;
+        top: 0.1em;
+      }
+
+      .copy:active {
+        box-shadow: 0 0 #888;
+        top: 0.2em;
+      }
+
+      @media (min-width: 800px) {
+        body {
+          font-size: 16px;
+        }
+      }
+    </style>
+
+  </head>
+  <body>
+
+    <div>
+      <h1>Password generator</h1>
+      <input id="target" size="16">
+      <button class="generate" onclick="generatePassword()">Generate</button>
+      <button class='copy' data-clipboard-target="#target">Copy</button>
+    </div>
+
+    <script>
+      var lowercase = 'abcdefghijklmnopqrstuvwxyz';
+      var uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      var numbers = '0123456789';
+      var special = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
+
+      function shuffle(array) {
+        let count = array.length;
+        while (count) {
+          let i = Math.floor(Math.random() * count--);
+          let tmp = array[count];
+          array[count] = array[i];
+          array[i] = tmp;
+        }
+        return array;
+      }
+
+      function randomChar(array) {
+        return array[Math.floor(Math.random() * array.length)];
+      }
+
+      function generatePassword() {
+        var password = [];
+        for (let i = 0; i < 4; i++) { password.push(randomChar(lowercase)); };
+        for (let i = 0; i < 4; i++) { password.push(randomChar(uppercase)); };
+        for (let i = 0; i < 4; i++) { password.push(randomChar(numbers)); };
+        for (let i = 0; i < 4; i++) { password.push(randomChar(special)); };
+        document.getElementById('target').value = shuffle(password).join('');
+      }
+
+      new Clipboard('.copy');
+    </script>
+  </body>
+</html>
